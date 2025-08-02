@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Dip's New CRUD Project{% endblock title %}
+
+{% block content %}
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Tweeter</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'tweet_list' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link bg-dark rounded" href="{% url 'tweet_create' %}">Create a Tweet</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="alert alert-primary mt-4 fs-4 text-center fw-bold text-white" style="background-color: rgb(47, 45, 19);" role="alert">
+        {% if form.instance.pk %}
+            Edit Tweet
+        {% else %}
+            Create Tweet
+        {% endif %}
+    </div>
+
+    <!-- Form -->
+    <div class="container text-white">
+        <form method="post" enctype="multipart/form-data" class="bg-dark p-4 rounded shadow">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="{{ form.text.id_for_label }}" class="form-label">Tweet Text</label>
+                {{ form.text|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.photo.id_for_label }}" class="form-label">Photo</label>
+                {{ form.photo|add_class:"form-control" }}
+            </div>
+
+            <button type="submit" class="btn btn-success">Submit</button> 
+            <a href="{% url 'tweet_list' %}" class="btn btn-primary">Back to tweet list</a>
+        </form>
+    </div>
+{% endblock content %}
